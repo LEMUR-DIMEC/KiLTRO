@@ -1,6 +1,6 @@
 # KiLTRO
 
-Robot description of KILTRO, a 25.4 kg quadruped, in two formats: a URDF and the
+Robot description of KiLTRO, a 25.4 kg quadruped, in two formats: a URDF and the
 MuJoCo (MJCF) model we use for MPC and open-loop gait tests. The robot is built; the
 URDF was derived from the MJCF. Both share the same kinematics, masses, inertias, joint
 limits and collision shapes, and only differ in how the visual meshes are packaged
