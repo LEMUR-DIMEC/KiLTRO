@@ -4,13 +4,20 @@ Robot description of KILTRO, a 25.4 kg quadruped, in two formats: a URDF and the
 MuJoCo (MJCF) model we use for MPC and open-loop gait tests. The robot is built; the
 URDF was derived from the MJCF. Both share the same kinematics, masses, inertias, joint
 limits and collision shapes, and only differ in how the visual meshes are packaged
-(see Visual meshes). The joint table and conventions below apply to both
+(see Visual meshes). The joint table and conventions below apply to both.
+
+<p align="center">
+  <img src="images/KiLTRO.jpg" height="300" alt="KILTRO robot">
+  <img src="images/KiLTRO_mujoco.jpg" height="300" alt="KILTRO MuJoCo model">
+</p>
+<p align="center"><i>Left: the real robot. Right: the MJCF model in MuJoCo.</i></p>
 
 ```
 urdf/kiltro.urdf      13 links, 12 revolute joints, plus 4 fixed foot frames
 meshes/               47 visual OBJ meshes, metres
 view_in_mujoco.py     loads the URDF in MuJoCo to look at it
 mjcf/                 the same robot as a MuJoCo model: kiltro.xml, scene.xml, assets/
+images/               photos of the robot and the model
 ```
 
 ## Conventions
@@ -56,11 +63,11 @@ The URDF and the MJCF show the same geometry with different mesh files. URDF giv
 visual a single flat colour, so the CAD is exported split by material: 47 OBJ files, one
 colour each. The MJCF uses one multicolour mesh per part, 7 in total. Every triangle
 carries a texture coordinate pointing to a stripe in `mjcf/assets/palette.png`, one stripe
-per CAD material, using less meshes in this case.
+per CAD material, using fewer meshes in this case.
 
 ## Observation
 
-We use reflected rotor inertia, 0.03 kg m2 per joint, as the `armature` attribute in MuJoCo.
+We use reflected rotor inertia, 0.03 kg m2 per joint, as the `armature` attribute on MuJoCo.
 
 ## Testing
 
@@ -74,8 +81,8 @@ python view_in_mujoco.py --check  # masses, inertias and limits, no window
 
 The default mode pins the base and turns gravity off so the sliders are usable.
 
-In case for the MJCF model, this opens directly in the MuJoCo viewer using:
+The MJCF model opens directly in the MuJoCo viewer:
 
 ```
-python3 -m mujoco.viewer --mjcf="$PWD/mjcf/scene.xml"
+python -m mujoco.viewer --mjcf="$PWD/mjcf/scene.xml"
 ```
