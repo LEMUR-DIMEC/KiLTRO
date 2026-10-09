@@ -1,0 +1,6 @@
+# Archivos que git no debe subir
+__pycache__/
+*.pyc
+MUJOCO_LOG.TXT
+.DS_Store
+__MACOSX/

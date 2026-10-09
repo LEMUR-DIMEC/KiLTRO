@@ -1,0 +1,873 @@
+<?xml version="1.0"?>
+<!-- KILTRO quadruped.
+
+     Author: Lucas Garrido Sein
+     Affiliation: LEMUR (Laboratory for Engineering in Mechatronics and Robotics), Universidad de Chile
+
+     Units: metres, kilograms, radians. Trunk frame: X forward, Y left, Z up.
+     Joint zero is the robot mid-stance pose, legs folded, not the straight-leg pose.
+
+     Gearing: abduction and thigh 1:26.11 (two 1:5.11 planetary stages),
+     knee 1:31.33 (same planetary plus a 30/36 tooth belt).
+     
+     Reflected rotor inertia is 0.03 kg m2 per joint. URDF has no field for it directly. -->
+<robot name="kiltro">
+
+  <material name="kiltro_color_0"><color rgba="0.098 0.098 0.098 1"/></material>
+  <material name="kiltro_color_1"><color rgba="0.176 0.173 0.184 1"/></material>
+  <material name="kiltro_color_2"><color rgba="0.416 0.18 0.165 1"/></material>
+  <material name="kiltro_color_3"><color rgba="0.627 0.627 0.627 1"/></material>
+  <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+  <material name="kiltro_color_5"><color rgba="0.867 0.867 0.867 1"/></material>
+  <material name="kiltro_color_6"><color rgba="0.937 0.922 0.906 1"/></material>
+  <material name="kiltro_color_7"><color rgba="0.961 0.961 0.965 1"/></material>
+  <material name="kiltro_color_8"><color rgba="0.973 0.969 0.929 1"/></material>
+
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0.012597 0.00068 -0.007484" rpy="0 0 0"/>
+      <mass value="13.012058"/>
+      <inertia ixx="0.1418" ixy="0.0001619" ixz="0.001701" iyy="0.4764" iyz="-0.0004359" izz="0.5465"/>
+    </inertial>
+    <collision>
+      <origin xyz="0 0 0.03" rpy="0 0 0"/>
+      <geometry><box size="0.75 0.292 0.14"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 0 -0.0625" rpy="0 0 0"/>
+      <geometry><box size="0.75 0.15 0.045"/></geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/trunk_00.obj"/></geometry>
+      <material name="kiltro_color_3"><color rgba="0.627 0.627 0.627 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/trunk_01.obj"/></geometry>
+      <material name="kiltro_color_7"><color rgba="0.961 0.961 0.965 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/trunk_02.obj"/></geometry>
+      <material name="kiltro_color_5"><color rgba="0.867 0.867 0.867 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/trunk_03.obj"/></geometry>
+      <material name="kiltro_color_7"><color rgba="0.961 0.961 0.965 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/trunk_04.obj"/></geometry>
+      <material name="kiltro_color_0"><color rgba="0.098 0.098 0.098 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/trunk_05.obj"/></geometry>
+      <material name="kiltro_color_0"><color rgba="0.098 0.098 0.098 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/trunk_06.obj"/></geometry>
+      <material name="kiltro_color_1"><color rgba="0.176 0.173 0.184 1"/></material>
+    </visual>
+  </link>
+
+  <link name="FR_hip">
+    <inertial>
+      <origin xyz="0.062617 -0.017729 3.8e-05" rpy="0 0 0"/>
+      <mass value="1.014168"/>
+      <inertia ixx="0.001013" ixy="2.2468219e-05" ixz="1.5793e-08" iyy="0.00149" iyz="-1.111084e-06" izz="0.001378"/>
+    </inertial>
+    <collision>
+      <origin xyz="0.06395 -0.0231 0" rpy="1.5708 0 0"/>
+      <geometry><cylinder radius="0.06" length="0.08"/></geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.039365 0.063241 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/hip_00.obj"/></geometry>
+      <material name="kiltro_color_8"><color rgba="0.973 0.969 0.929 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.039365 0.063241 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/hip_01.obj"/></geometry>
+      <material name="kiltro_color_0"><color rgba="0.098 0.098 0.098 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.039365 0.063241 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/hip_02.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.039365 0.063241 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/hip_03.obj"/></geometry>
+      <material name="kiltro_color_1"><color rgba="0.176 0.173 0.184 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.039365 0.063241 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/hip_04.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+  </link>
+  <joint name="FR_hip_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="FR_hip"/>
+    <origin xyz="0.18735 -0.114 -0.03" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.25" upper="0.5" effort="31.74" velocity="5.745"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+
+  <link name="FR_thigh">
+    <inertial>
+      <origin xyz="-0.056134 -0.039711 -0.031318" rpy="0 0 0"/>
+      <mass value="1.686840"/>
+      <inertia ixx="0.006642" ixy="0.001844" ixz="-0.006677" iyy="0.01846" iyz="0.001077" izz="0.01478"/>
+    </inertial>
+    <collision>
+      <origin xyz="-0.09928 -0.0175 -0.05449" rpy="0 1.0688 0"/>
+      <geometry><box size="0.12 0.055 0.3615"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 -0.0185 0" rpy="1.5708 0 0"/>
+      <geometry><cylinder radius="0.07" length="0.055"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 -0.066 0" rpy="1.5708 0 0"/>
+      <geometry><cylinder radius="0.06" length="0.05"/></geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.103315 0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_00.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_01.obj"/></geometry>
+      <material name="kiltro_color_8"><color rgba="0.973 0.969 0.929 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_02.obj"/></geometry>
+      <material name="kiltro_color_0"><color rgba="0.098 0.098 0.098 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_03.obj"/></geometry>
+      <material name="kiltro_color_0"><color rgba="0.098 0.098 0.098 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_04.obj"/></geometry>
+      <material name="kiltro_color_1"><color rgba="0.176 0.173 0.184 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_05.obj"/></geometry>
+      <material name="kiltro_color_6"><color rgba="0.937 0.922 0.906 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_06.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_07.obj"/></geometry>
+      <material name="kiltro_color_1"><color rgba="0.176 0.173 0.184 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_08.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+  </link>
+  <joint name="FR_thigh_joint" type="revolute">
+    <parent link="FR_hip"/>
+    <child link="FR_thigh"/>
+    <origin xyz="0.06395 -0.0631 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-2.6" upper="0.825" effort="31.74" velocity="5.745"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+
+  <link name="FR_calf">
+    <inertial>
+      <origin xyz="0.127329 0.000217 -0.173377" rpy="0 0 0"/>
+      <mass value="0.404129"/>
+      <inertia ixx="0.002406" ixy="-1.728254e-05" ixz="0.001158" iyy="0.003112" iyz="2.5683551e-05" izz="0.0008166"/>
+    </inertial>
+    <collision>
+      <origin xyz="0.155278 0 -0.148032" rpy="0 0 0"/>
+      <geometry><sphere radius="0.019"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 0 1.38777878e-17" rpy="0 0 0"/>
+      <geometry><sphere radius="0.019"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.077639 0 -0.074016" rpy="0 -0.80928337 0"/>
+      <geometry><cylinder radius="0.019" length="0.214534"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.155278 0 -0.212072" rpy="0 0 0"/>
+      <geometry><sphere radius="0.019"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.155278 0 -0.148032" rpy="0 0 0"/>
+      <geometry><sphere radius="0.019"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.155278 0 -0.180052" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.019" length="0.06404"/></geometry>
+    </collision>
+    <visual>
+      <origin xyz="0.11495 0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_00.obj"/></geometry>
+      <material name="kiltro_color_3"><color rgba="0.627 0.627 0.627 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.11495 0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_01.obj"/></geometry>
+      <material name="kiltro_color_7"><color rgba="0.961 0.961 0.965 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.11495 0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_02.obj"/></geometry>
+      <material name="kiltro_color_1"><color rgba="0.176 0.173 0.184 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.11495 0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_03.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.11495 0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_04.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.11495 0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_05.obj"/></geometry>
+      <material name="kiltro_color_2"><color rgba="0.416 0.18 0.165 1"/></material>
+    </visual>
+    <collision>
+      <origin xyz="0.156513 0 -0.243322" rpy="0 0 0"/>
+      <geometry><sphere radius="0.03125"/></geometry>
+    </collision>
+  </link>
+  <joint name="FR_calf_joint" type="revolute">
+    <parent link="FR_thigh"/>
+    <child link="FR_calf"/>
+    <origin xyz="-0.218265 -0.016 -0.130605" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-0.425" upper="0.525" effort="38.09" velocity="4.788"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+
+  <link name="FR_foot"/>
+  <joint name="FR_foot_fixed" type="fixed">
+    <parent link="FR_calf"/>
+    <child link="FR_foot"/>
+    <origin xyz="0.156513 0 -0.243322" rpy="0 0 0"/>
+  </joint>
+
+  <link name="FL_hip">
+    <inertial>
+      <origin xyz="0.062617 0.017729 3.8e-05" rpy="0 0 0"/>
+      <mass value="1.014168"/>
+      <inertia ixx="0.001013" ixy="-2.2468219e-05" ixz="-1.5793e-08" iyy="0.00149" iyz="1.111084e-06" izz="0.001378"/>
+    </inertial>
+    <collision>
+      <origin xyz="0.06395 0.0231 0" rpy="1.5708 0 0"/>
+      <geometry><cylinder radius="0.06" length="0.08"/></geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.039365 -0.063241 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/hip_mirror_00.obj"/></geometry>
+      <material name="kiltro_color_8"><color rgba="0.973 0.969 0.929 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.039365 -0.063241 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/hip_mirror_01.obj"/></geometry>
+      <material name="kiltro_color_0"><color rgba="0.098 0.098 0.098 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.039365 -0.063241 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/hip_mirror_02.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.039365 -0.063241 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/hip_mirror_03.obj"/></geometry>
+      <material name="kiltro_color_1"><color rgba="0.176 0.173 0.184 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.039365 -0.063241 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/hip_mirror_04.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+  </link>
+  <joint name="FL_hip_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="FL_hip"/>
+    <origin xyz="0.18735 0.114 -0.03" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.5" upper="0.25" effort="31.74" velocity="5.745"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+
+  <link name="FL_thigh">
+    <inertial>
+      <origin xyz="-0.056134 0.039711 -0.031318" rpy="0 0 0"/>
+      <mass value="1.686840"/>
+      <inertia ixx="0.006366" ixy="-0.001867" ixz="-0.006504" iyy="0.01847" iyz="-0.001039" izz="0.01506"/>
+    </inertial>
+    <collision>
+      <origin xyz="-0.09928 0.0175 -0.05449" rpy="0 1.0688 0"/>
+      <geometry><box size="0.12 0.055 0.3615"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 0.0185 0" rpy="1.5708 0 0"/>
+      <geometry><cylinder radius="0.07" length="0.055"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 0.066 0" rpy="1.5708 0 0"/>
+      <geometry><cylinder radius="0.06" length="0.05"/></geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.103315 -0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_mirror_00.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 -0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_mirror_01.obj"/></geometry>
+      <material name="kiltro_color_8"><color rgba="0.973 0.969 0.929 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 -0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_mirror_02.obj"/></geometry>
+      <material name="kiltro_color_0"><color rgba="0.098 0.098 0.098 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 -0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_mirror_03.obj"/></geometry>
+      <material name="kiltro_color_0"><color rgba="0.098 0.098 0.098 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 -0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_mirror_04.obj"/></geometry>
+      <material name="kiltro_color_1"><color rgba="0.176 0.173 0.184 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 -0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_mirror_05.obj"/></geometry>
+      <material name="kiltro_color_6"><color rgba="0.937 0.922 0.906 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 -0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_mirror_06.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 -0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_mirror_07.obj"/></geometry>
+      <material name="kiltro_color_1"><color rgba="0.176 0.173 0.184 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 -0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_mirror_08.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+  </link>
+  <joint name="FL_thigh_joint" type="revolute">
+    <parent link="FL_hip"/>
+    <child link="FL_thigh"/>
+    <origin xyz="0.06395 0.0631 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-2.6" upper="0.825" effort="31.74" velocity="5.745"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+
+  <link name="FL_calf">
+    <inertial>
+      <origin xyz="0.127329 -0.000217 -0.173377" rpy="0 0 0"/>
+      <mass value="0.404129"/>
+      <inertia ixx="0.002392" ixy="1.8100848e-05" ixz="0.001167" iyy="0.003112" iyz="-2.7376066e-05" izz="0.0008305"/>
+    </inertial>
+    <collision>
+      <origin xyz="0.155278 0 -0.148032" rpy="0 0 0"/>
+      <geometry><sphere radius="0.019"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 0 1.38777878e-17" rpy="0 0 0"/>
+      <geometry><sphere radius="0.019"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.077639 0 -0.074016" rpy="0 -0.80928337 0"/>
+      <geometry><cylinder radius="0.019" length="0.214534"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.155278 0 -0.212072" rpy="0 0 0"/>
+      <geometry><sphere radius="0.019"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.155278 0 -0.148032" rpy="0 0 0"/>
+      <geometry><sphere radius="0.019"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.155278 0 -0.180052" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.019" length="0.06404"/></geometry>
+    </collision>
+    <visual>
+      <origin xyz="0.11495 -0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_mirror_00.obj"/></geometry>
+      <material name="kiltro_color_3"><color rgba="0.627 0.627 0.627 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.11495 -0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_mirror_01.obj"/></geometry>
+      <material name="kiltro_color_7"><color rgba="0.961 0.961 0.965 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.11495 -0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_mirror_02.obj"/></geometry>
+      <material name="kiltro_color_1"><color rgba="0.176 0.173 0.184 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.11495 -0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_mirror_03.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.11495 -0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_mirror_04.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.11495 -0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_mirror_05.obj"/></geometry>
+      <material name="kiltro_color_2"><color rgba="0.416 0.18 0.165 1"/></material>
+    </visual>
+    <collision>
+      <origin xyz="0.156513 0 -0.243322" rpy="0 0 0"/>
+      <geometry><sphere radius="0.03125"/></geometry>
+    </collision>
+  </link>
+  <joint name="FL_calf_joint" type="revolute">
+    <parent link="FL_thigh"/>
+    <child link="FL_calf"/>
+    <origin xyz="-0.218265 0.016 -0.130605" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-0.425" upper="0.525" effort="38.09" velocity="4.788"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+
+  <link name="FL_foot"/>
+  <joint name="FL_foot_fixed" type="fixed">
+    <parent link="FL_calf"/>
+    <child link="FL_foot"/>
+    <origin xyz="0.156513 0 -0.243322" rpy="0 0 0"/>
+  </joint>
+
+  <link name="RR_hip">
+    <inertial>
+      <origin xyz="-0.062617 -0.017729 3.8e-05" rpy="0 0 0"/>
+      <mass value="1.014168"/>
+      <inertia ixx="0.001013" ixy="-2.2468219e-05" ixz="1.5793e-08" iyy="0.00149" iyz="-1.111084e-06" izz="0.001378"/>
+    </inertial>
+    <collision>
+      <origin xyz="-0.06395 -0.0231 0" rpy="1.5708 0 0"/>
+      <geometry><cylinder radius="0.06" length="0.08"/></geometry>
+    </collision>
+    <visual>
+      <origin xyz="0.039365 0.063241 -0.000494" rpy="0 0 3.14159265"/>
+      <geometry><mesh filename="package://kiltro/meshes/hip_mirror_00.obj"/></geometry>
+      <material name="kiltro_color_8"><color rgba="0.973 0.969 0.929 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.039365 0.063241 -0.000494" rpy="0 0 3.14159265"/>
+      <geometry><mesh filename="package://kiltro/meshes/hip_mirror_01.obj"/></geometry>
+      <material name="kiltro_color_0"><color rgba="0.098 0.098 0.098 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.039365 0.063241 -0.000494" rpy="0 0 3.14159265"/>
+      <geometry><mesh filename="package://kiltro/meshes/hip_mirror_02.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.039365 0.063241 -0.000494" rpy="0 0 3.14159265"/>
+      <geometry><mesh filename="package://kiltro/meshes/hip_mirror_03.obj"/></geometry>
+      <material name="kiltro_color_1"><color rgba="0.176 0.173 0.184 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.039365 0.063241 -0.000494" rpy="0 0 3.14159265"/>
+      <geometry><mesh filename="package://kiltro/meshes/hip_mirror_04.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+  </link>
+  <joint name="RR_hip_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="RR_hip"/>
+    <origin xyz="-0.18735 -0.114 -0.03" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.25" upper="0.5" effort="31.74" velocity="5.745"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+
+  <link name="RR_thigh">
+    <inertial>
+      <origin xyz="-0.056134 -0.039711 -0.031318" rpy="0 0 0"/>
+      <mass value="1.686840"/>
+      <inertia ixx="0.006642" ixy="0.001844" ixz="-0.006677" iyy="0.01846" iyz="0.001077" izz="0.01478"/>
+    </inertial>
+    <collision>
+      <origin xyz="-0.09928 -0.0175 -0.05449" rpy="0 1.0688 0"/>
+      <geometry><box size="0.12 0.055 0.3615"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 -0.0185 0" rpy="1.5708 0 0"/>
+      <geometry><cylinder radius="0.07" length="0.055"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 -0.066 0" rpy="1.5708 0 0"/>
+      <geometry><cylinder radius="0.06" length="0.05"/></geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.103315 0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_00.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_01.obj"/></geometry>
+      <material name="kiltro_color_8"><color rgba="0.973 0.969 0.929 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_02.obj"/></geometry>
+      <material name="kiltro_color_0"><color rgba="0.098 0.098 0.098 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_03.obj"/></geometry>
+      <material name="kiltro_color_0"><color rgba="0.098 0.098 0.098 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_04.obj"/></geometry>
+      <material name="kiltro_color_1"><color rgba="0.176 0.173 0.184 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_05.obj"/></geometry>
+      <material name="kiltro_color_6"><color rgba="0.937 0.922 0.906 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_06.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_07.obj"/></geometry>
+      <material name="kiltro_color_1"><color rgba="0.176 0.173 0.184 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_08.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+  </link>
+  <joint name="RR_thigh_joint" type="revolute">
+    <parent link="RR_hip"/>
+    <child link="RR_thigh"/>
+    <origin xyz="-0.06395 -0.0631 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-2.6" upper="0.825" effort="31.74" velocity="5.745"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+
+  <link name="RR_calf">
+    <inertial>
+      <origin xyz="0.127329 -0.000217 -0.173385" rpy="0 0 0"/>
+      <mass value="0.404129"/>
+      <inertia ixx="0.002406" ixy="-1.728254e-05" ixz="0.001158" iyy="0.003112" iyz="2.5683551e-05" izz="0.0008166"/>
+    </inertial>
+    <collision>
+      <origin xyz="0.155278 0 -0.148032" rpy="0 0 0"/>
+      <geometry><sphere radius="0.019"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 0 1.38777878e-17" rpy="0 0 0"/>
+      <geometry><sphere radius="0.019"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.077639 0 -0.074016" rpy="0 -0.80928337 0"/>
+      <geometry><cylinder radius="0.019" length="0.214534"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.155278 0 -0.212072" rpy="0 0 0"/>
+      <geometry><sphere radius="0.019"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.155278 0 -0.148032" rpy="0 0 0"/>
+      <geometry><sphere radius="0.019"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.155278 0 -0.180052" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.019" length="0.06404"/></geometry>
+    </collision>
+    <visual>
+      <origin xyz="0.11495 0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_00.obj"/></geometry>
+      <material name="kiltro_color_3"><color rgba="0.627 0.627 0.627 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.11495 0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_01.obj"/></geometry>
+      <material name="kiltro_color_7"><color rgba="0.961 0.961 0.965 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.11495 0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_02.obj"/></geometry>
+      <material name="kiltro_color_1"><color rgba="0.176 0.173 0.184 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.11495 0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_03.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.11495 0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_04.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.11495 0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_05.obj"/></geometry>
+      <material name="kiltro_color_2"><color rgba="0.416 0.18 0.165 1"/></material>
+    </visual>
+    <collision>
+      <origin xyz="0.156513 0 -0.243322" rpy="0 0 0"/>
+      <geometry><sphere radius="0.03125"/></geometry>
+    </collision>
+  </link>
+  <joint name="RR_calf_joint" type="revolute">
+    <parent link="RR_thigh"/>
+    <child link="RR_calf"/>
+    <origin xyz="-0.218265 -0.016 -0.130605" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-0.425" upper="0.525" effort="38.09" velocity="4.788"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+
+  <link name="RR_foot"/>
+  <joint name="RR_foot_fixed" type="fixed">
+    <parent link="RR_calf"/>
+    <child link="RR_foot"/>
+    <origin xyz="0.156513 0 -0.243322" rpy="0 0 0"/>
+  </joint>
+
+  <link name="RL_hip">
+    <inertial>
+      <origin xyz="-0.062617 0.017729 3.8e-05" rpy="0 0 0"/>
+      <mass value="1.014168"/>
+      <inertia ixx="0.001013" ixy="2.2468219e-05" ixz="-1.5793e-08" iyy="0.00149" iyz="1.111084e-06" izz="0.001378"/>
+    </inertial>
+    <collision>
+      <origin xyz="-0.06395 0.0231 0" rpy="1.5708 0 0"/>
+      <geometry><cylinder radius="0.06" length="0.08"/></geometry>
+    </collision>
+    <visual>
+      <origin xyz="0.039365 -0.063241 -0.000494" rpy="0 0 3.14159265"/>
+      <geometry><mesh filename="package://kiltro/meshes/hip_00.obj"/></geometry>
+      <material name="kiltro_color_8"><color rgba="0.973 0.969 0.929 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.039365 -0.063241 -0.000494" rpy="0 0 3.14159265"/>
+      <geometry><mesh filename="package://kiltro/meshes/hip_01.obj"/></geometry>
+      <material name="kiltro_color_0"><color rgba="0.098 0.098 0.098 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.039365 -0.063241 -0.000494" rpy="0 0 3.14159265"/>
+      <geometry><mesh filename="package://kiltro/meshes/hip_02.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.039365 -0.063241 -0.000494" rpy="0 0 3.14159265"/>
+      <geometry><mesh filename="package://kiltro/meshes/hip_03.obj"/></geometry>
+      <material name="kiltro_color_1"><color rgba="0.176 0.173 0.184 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.039365 -0.063241 -0.000494" rpy="0 0 3.14159265"/>
+      <geometry><mesh filename="package://kiltro/meshes/hip_04.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+  </link>
+  <joint name="RL_hip_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="RL_hip"/>
+    <origin xyz="-0.18735 0.114 -0.03" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.5" upper="0.25" effort="31.74" velocity="5.745"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+
+  <link name="RL_thigh">
+    <inertial>
+      <origin xyz="-0.056134 0.039711 -0.031318" rpy="0 0 0"/>
+      <mass value="1.686840"/>
+      <inertia ixx="0.006366" ixy="-0.001867" ixz="-0.006504" iyy="0.01847" iyz="-0.001039" izz="0.01506"/>
+    </inertial>
+    <collision>
+      <origin xyz="-0.09928 0.0175 -0.05449" rpy="0 1.0688 0"/>
+      <geometry><box size="0.12 0.055 0.3615"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 0.0185 0" rpy="1.5708 0 0"/>
+      <geometry><cylinder radius="0.07" length="0.055"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 0.066 0" rpy="1.5708 0 0"/>
+      <geometry><cylinder radius="0.06" length="0.05"/></geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.103315 -0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_mirror_00.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 -0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_mirror_01.obj"/></geometry>
+      <material name="kiltro_color_8"><color rgba="0.973 0.969 0.929 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 -0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_mirror_02.obj"/></geometry>
+      <material name="kiltro_color_0"><color rgba="0.098 0.098 0.098 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 -0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_mirror_03.obj"/></geometry>
+      <material name="kiltro_color_0"><color rgba="0.098 0.098 0.098 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 -0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_mirror_04.obj"/></geometry>
+      <material name="kiltro_color_1"><color rgba="0.176 0.173 0.184 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 -0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_mirror_05.obj"/></geometry>
+      <material name="kiltro_color_6"><color rgba="0.937 0.922 0.906 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 -0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_mirror_06.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 -0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_mirror_07.obj"/></geometry>
+      <material name="kiltro_color_1"><color rgba="0.176 0.173 0.184 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.103315 -0.126341 -0.000494" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/thigh_mirror_08.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+  </link>
+  <joint name="RL_thigh_joint" type="revolute">
+    <parent link="RL_hip"/>
+    <child link="RL_thigh"/>
+    <origin xyz="-0.06395 0.0631 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-2.6" upper="0.825" effort="31.74" velocity="5.745"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+
+  <link name="RL_calf">
+    <inertial>
+      <origin xyz="0.127329 0.000232 -0.173385" rpy="0 0 0"/>
+      <mass value="0.404129"/>
+      <inertia ixx="0.002392" ixy="1.8100848e-05" ixz="0.001167" iyy="0.003112" iyz="-2.7376066e-05" izz="0.0008305"/>
+    </inertial>
+    <collision>
+      <origin xyz="0.155278 0 -0.148032" rpy="0 0 0"/>
+      <geometry><sphere radius="0.019"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 0 1.38777878e-17" rpy="0 0 0"/>
+      <geometry><sphere radius="0.019"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.077639 0 -0.074016" rpy="0 -0.80928337 0"/>
+      <geometry><cylinder radius="0.019" length="0.214534"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.155278 0 -0.212072" rpy="0 0 0"/>
+      <geometry><sphere radius="0.019"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.155278 0 -0.148032" rpy="0 0 0"/>
+      <geometry><sphere radius="0.019"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.155278 0 -0.180052" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.019" length="0.06404"/></geometry>
+    </collision>
+    <visual>
+      <origin xyz="0.11495 -0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_mirror_00.obj"/></geometry>
+      <material name="kiltro_color_3"><color rgba="0.627 0.627 0.627 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.11495 -0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_mirror_01.obj"/></geometry>
+      <material name="kiltro_color_7"><color rgba="0.961 0.961 0.965 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.11495 -0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_mirror_02.obj"/></geometry>
+      <material name="kiltro_color_1"><color rgba="0.176 0.173 0.184 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.11495 -0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_mirror_03.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.11495 -0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_mirror_04.obj"/></geometry>
+      <material name="kiltro_color_4"><color rgba="0.749 0.098 0.196 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.11495 -0.142341 0.130111" rpy="0 0 0"/>
+      <geometry><mesh filename="package://kiltro/meshes/calf_mirror_05.obj"/></geometry>
+      <material name="kiltro_color_2"><color rgba="0.416 0.18 0.165 1"/></material>
+    </visual>
+    <collision>
+      <origin xyz="0.156513 0 -0.243322" rpy="0 0 0"/>
+      <geometry><sphere radius="0.03125"/></geometry>
+    </collision>
+  </link>
+  <joint name="RL_calf_joint" type="revolute">
+    <parent link="RL_thigh"/>
+    <child link="RL_calf"/>
+    <origin xyz="-0.218265 0.016 -0.130605" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-0.425" upper="0.525" effort="38.09" velocity="4.788"/>
+    <dynamics damping="0.1" friction="0"/>
+  </joint>
+
+  <link name="RL_foot"/>
+  <joint name="RL_foot_fixed" type="fixed">
+    <parent link="RL_calf"/>
+    <child link="RL_foot"/>
+    <origin xyz="0.156513 0 -0.243322" rpy="0 0 0"/>
+  </joint>
+
+</robot>

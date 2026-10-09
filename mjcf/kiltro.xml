@@ -1,0 +1,351 @@
+<!-- KILTRO quadruped: MuJoCo model
+     Author: Lucas Garrido Sein
+     Affiliation: LEMUR (Laboratory for Engineering in Mechatronics and Robotics), Universidad de Chile -->
+<mujoco model="kiltro">
+  <compiler angle="radian" meshdir="assets" texturedir="assets" autolimits="true"/>
+
+  <option cone="elliptic" impratio="100" timestep="0.001"/>
+
+  <default>
+    <default class="kiltro">
+
+      <!-- Standard friction for the whole body and a 1 mm collision margin -->
+      <geom friction="0.6" margin="0.001"/>
+
+      <!-- Axis: all joints rotate about Y unless a class overrides it.
+      damping, frictionloss: resistance to rotation (here mostly from the gearbox).
+      armature: reflected rotor inertia, needed with a large gear reduction.
+      kp: proportional position gain, i.e. how stiffly the motor holds a target position. -->
+      <joint axis="0 1 0" damping="0.1" armature="0.03" frictionloss="0.0"/>
+
+      <position kp="150"/> 
+
+      <!-- One class per joint (motor) -->
+      <default class="abduction">
+
+        <!-- axis: this motor rotates about X.
+        range is the physical limit, the largest angle the joint can reach.
+        ctrlrange is the range of values the software may send to the motor.
+
+        NOTE 1: ranges are joint angles. Before commanding the motor, apply the gear
+        ratio to get the actual motor rotation.
+
+        NOTE 2: angles are offset because zero is the mid-stance pose we impose,
+        so they do not match the "theoretical" zero. -->
+
+        <!-- NOTE 3: the axis is "1 0 0" on all four legs, but the left legs are mirrored,
+        so the same sign moves them the opposite way: on the right legs a positive angle
+        moves the leg inward, on the left legs outward. That is why the asymmetric range
+        is mirrored between sides. -->
+
+        <!-- Assumes a 1.5 Nm stall torque motor and a two-stage planetary, 1:5.11 per stage, 90% efficiency each -->
+        <!-- kp/kv are initial values; Python can overwrites them on every step (Kp_stance/Kp_swing, Kd_stance/Kd_swing) -->
+
+        <default class="abduction_R">   <!-- FR and RR legs -->
+          <joint axis="1 0 0" damping="0.1" range="-0.25 0.5"/>
+          <position ctrlrange="-0.25 0.5" forcerange="-31.74 31.74" kp="150" kv="13"/>
+        </default>
+
+        <default class="abduction_L">   <!-- FL and RL legs -->
+          <joint axis="1 0 0" damping="0.1" range="-0.5 0.25"/>
+          <position ctrlrange="-0.5 0.25" forcerange="-31.74 31.74" kp="150" kv="13"/>
+        </default>
+      </default>
+
+      <default class="hip">
+        <joint range="-2.6 0.825"/>
+        <!-- Assumes a 1.5 Nm stall torque motor and a two-stage planetary, 1:5.11 per stage, 90% efficiency each -->
+        <position ctrlrange="-2.6 0.825" forcerange="-31.74 31.74" kp="150" kv="13"/>
+      </default>
+
+      <default class="knee">
+        <joint range="-0.425 0.525"/>
+        <!-- Assumes a 1.5 Nm stall torque motor and a two-stage planetary, 1:5.11 per stage -->
+        <!-- Plus a 30/36 tooth belt reduction, assumed 100% efficient -->
+        <position ctrlrange="-0.425 0.525" forcerange="-38.09 38.09" kp="150" kv="20"/>
+      </default>
+
+      <!-- Visual class, purely cosmetic, not physical bodies -->
+      <!-- NOTE: contype/conaffinity=0 -> no collisions; mass=0 -> no inertia contribution -->
+      <default class="visual">
+        <geom type="mesh" contype="0" conaffinity="0" group="2" mass="0" material="kiltro_color"/>
+      </default>
+
+      <!-- Collision classes: these are the physical bodies of the robot -->
+      <default class="collision">
+        <geom group="3"/>
+        
+        <default class="trunk_upper">
+          <geom type="box" size="0.375 0.146 0.07" pos="0 0 0.03"/>
+        </default>
+
+        <default class="trunk_lower">
+          <geom type="box" size="0.375 0.075 0.0225" pos="0 0 -0.0625"/>
+        </default>
+
+        <default class="hip_FR">
+          <geom type="cylinder" size="0.06 0.04" pos="0.06395 -0.0231 0" euler="1.5708 0 0"/>
+        </default>
+        <default class="hip_FL">
+          <geom type="cylinder" size="0.06 0.04" pos="0.06395 0.0231 0" euler="1.5708 0 0"/>
+        </default>
+        <default class="hip_RR">
+          <geom type="cylinder" size="0.06 0.04" pos="-0.06395 -0.0231 0" euler="1.5708 0 0"/>
+        </default>
+        <default class="hip_RL">
+          <geom type="cylinder" size="0.06 0.04" pos="-0.06395 0.0231 0" euler="1.5708 0 0"/>
+        </default>
+      
+        <default class="thigh_left_body_central">
+          <geom type="box" size="0.06 0.0275 0.18075" pos="-0.09928 0.0175 -0.05449" euler="0 1.0688 0"/> 
+        </default>
+        <default class="thigh_left_body_upper">
+          <geom type="cylinder" size="0.07 0.0275" pos="0 0.0185 0" euler="1.5708 0 0"/>
+        </default>
+        <default class="thigh_left_calf_motor">
+          <geom type="cylinder" size="0.06 0.025" pos="0 0.066 0" euler="1.5708 0 0"/>
+        </default>
+
+        <default class="thigh_right_body_central">
+          <geom type="box" size="0.06 0.0275 0.18075" pos="-0.09928 -0.0175 -0.05449" euler="0 1.0688 0"/>
+        </default>
+        
+        <default class="thigh_right_body_upper">
+          <geom type="cylinder" size="0.07 0.0275" pos="0 -0.0185 0" euler="1.5708 0 0"/>
+        </default>
+        <default class="thigh_right_calf_motor">
+          <geom type="cylinder" size="0.06 0.025" pos="0 -0.066 0" euler="1.5708 0 0"/>
+        </default>
+
+        <default class="calf_upper">
+          <geom type="capsule" size="0.019" fromto="0 0 0 0.155278 0 -0.148032" />
+        </default>
+        <default class="calf_lower">
+          <geom type="capsule" size="0.019" fromto="0.155278 0 -0.148032 0.155278 0 -0.212072" />
+        </default>
+      
+        <default class="foot">
+          <geom type="sphere" size="0.03125" pos="0.156513 0 -0.243322" priority="1" solimp="0.9 0.95 0.002" condim="6"
+            friction="0.8 0.02 0.01"/>
+        </default>
+      </default>
+
+    </default>
+  </default>
+
+  <asset>
+    <material name="dark" specular="0" shininess="0.25" rgba="0.45 0.45 0.45 1"/>
+
+    <texture type="2d" name="palette" file="palette.png"/>
+    <material name="kiltro_color" texture="palette" specular="0.1" shininess="0.2"/>
+
+    <!-- Visual meshes (metres). *_mirror = mirrored about the XZ plane -->
+    <mesh name="trunk" file="trunk.obj"/>
+    <mesh name="hip" file="hip.obj"/>
+    <mesh name="hip_mirror" file="hip_mirror.obj"/>
+    <mesh name="thigh" file="thigh.obj"/>
+    <mesh name="thigh_mirror" file="thigh_mirror.obj"/>
+    <mesh name="calf" file="calf.obj"/>
+    <mesh name="calf_mirror" file="calf_mirror.obj"/>
+  </asset>
+
+  <worldbody>
+  
+    <!-- Lighting and camera -->
+    <light name="spotlight" mode="targetbodycom" target="trunk" pos="0 -1 2"/>
+
+    <!-- GENERAL STRUCTURE OF A BODY:
+    <body name="LINK" pos="POSITION RELATIVE TO THE PARENT FRAME">
+    <inertial mass="1.014168" pos="CENTRE OF MASS"
+        fullinertia="Ixx Iyy Izz Ixy Ixz Iyz"/> *No quat, since the inertia frame is not rotated.
+        <joint class="JOINT_CLASS" name="joint name"/>
+        <geom class="visual" mesh="visual-mesh-name" quat="orientation"/>
+        <geom class="collision" mesh="collision-mesh-name" quat="orientation"/>  -->
+
+    <!-- TRUNK -->
+    <body name="trunk" pos="0 0 0.4479791348" childclass="kiltro">
+
+      <site name="head" pos="0.3 0 0" size="0.02"/> <!-- Marker at the head -->
+      <!-- Free joint on the trunk to give it all 6 degrees of freedom -->
+      <freejoint/> 
+      <inertial mass="13.012058" pos="0.012597 0.00068 -0.007484"
+        fullinertia="0.1418 0.4764 0.5465 0.0001619 0.001701 -0.0004359"/>
+      <geom name="geom_trunk_upper" class="trunk_upper"/>
+      <geom name="geom_trunk_lower" class="trunk_lower"/>
+      <geom class="visual" mesh="trunk"/>
+
+    <!-- FR: front right leg -->
+      <body name="FR_hip" pos="0.18735 -0.114 -0.030">
+        <inertial mass="1.014168" pos="0.062617 -0.017729 0.000038" 
+          fullinertia="0.001013 0.00149 0.001378 0.000022468219 0.000000015793 -0.000001111084"/>
+        <joint class="abduction_R" name="FR_hip_joint"/>
+        <!-- Simplified collision geometry for performance --> 
+        <geom class="hip_FR"/>
+        <geom class="visual" mesh="hip" pos="-0.039365 0.063241 -0.000494"/>
+
+        <body name="FR_thigh" pos="0.06395 -0.0631 0">
+          <inertial mass="1.68684" pos="-0.056134 -0.039711 -0.031318" 
+            fullinertia="0.006642 0.01846 0.01478 0.001844 -0.006677 0.001077"/>
+          <joint class="hip" name="FR_thigh_joint"/>
+          <geom class="thigh_right_body_central"/> 
+          <geom class="thigh_right_body_upper"/>
+          <geom class="thigh_right_calf_motor"/>
+          <geom class="visual" mesh="thigh" pos="-0.103315 0.126341 -0.000494"/>
+
+          <body name="FR_calf" pos="-0.218265 -0.016 -0.130605">
+            <inertial mass="0.404129" pos="0.127329 0.000217 -0.173377"
+              fullinertia="0.002406 0.003112 0.0008166 -0.00001728254 0.001158 0.000025683551"/>
+            <joint class="knee" name="FR_calf_joint"/>
+            <geom class="calf_upper"/>
+            <geom class="calf_lower"/>
+            <geom class="visual" mesh="calf" pos="0.11495 0.142341 0.130111"/>
+
+            <!-- Foot (collision geom) -->
+            <geom class="foot"/>
+            <!-- Marker where the foot touches the ground -->
+            <site name="FR" pos="0.156513 0 -0.243322" type="sphere" size="0.03125" group="5"/>
+             
+          </body>
+        </body>
+      </body>
+
+    <!-- FL: front left leg -->
+      <body name="FL_hip" pos="0.18735 0.114 -0.030">
+        <inertial mass="1.014168" pos="0.062617 0.017729 0.000038" 
+          fullinertia="0.001013 0.00149 0.001378 -0.000022468219 -0.000000015793 0.000001111084"/>
+        <joint class="abduction_L" name="FL_hip_joint"/>
+          <geom class="hip_FL"/>
+        <geom class="visual" mesh="hip_mirror" pos="-0.039365 -0.063241 -0.000494"/> 
+
+        <body name="FL_thigh" pos="0.06395 0.0631 0">
+          <inertial mass="1.68684" pos="-0.056134 0.039711 -0.031318" 
+            fullinertia="0.006366 0.01847 0.01506 -0.001867 -0.006504 -0.001039"/>
+          <joint class="hip" name="FL_thigh_joint"/>
+          <geom class="thigh_left_body_central"/>
+          <geom class="thigh_left_body_upper"/>
+          <geom class="thigh_left_calf_motor"/>
+          <geom class="visual" mesh="thigh_mirror" pos="-0.103315 -0.126341 -0.000494"/>
+
+          <body name="FL_calf" pos="-0.218265 0.016 -0.130605">
+            <inertial mass="0.404129" pos="0.127329 -0.000217 -0.173377"
+              fullinertia="0.002392 0.003112 0.0008305 0.000018100848 0.001167 -0.000027376066"/>
+            <joint class="knee" name="FL_calf_joint"/>
+            <geom class="calf_upper"/>
+            <geom class="calf_lower"/>
+            <geom class="visual" mesh="calf_mirror" pos="0.11495 -0.142341 0.130111"/>
+
+            <geom class="foot"/>
+            <site name="FL" pos="0.156513 0 -0.243322" type="sphere" size="0.03125" group="5"/>
+
+          </body>
+        </body>
+      </body>
+
+    <!-- RR: rear right leg -->
+      <body name="RR_hip" pos="-0.18735 -0.114 -0.030">
+        <inertial mass="1.014168" pos="-0.062617 -0.017729 0.000038" 
+          fullinertia="0.001013 0.00149 0.001378 -0.000022468219 0.000000015793 -0.000001111084"/>
+        <joint class="abduction_R" name="RR_hip_joint"/>
+        <geom class="hip_RR"/>
+        <geom class="visual" mesh="hip_mirror" pos="0.039365 0.063241 -0.000494" quat="0 0 0 1"/>
+
+        <body name="RR_thigh" pos="-0.06395 -0.0631 0">
+          <inertial mass="1.68684" pos="-0.056134 -0.039711 -0.031318"
+            fullinertia="0.006642 0.01846 0.01478 0.001844 -0.006677 0.001077"/>
+          <joint class="hip" name="RR_thigh_joint"/>
+          <geom class="thigh_right_body_central"/> 
+          <geom class="thigh_right_body_upper"/>
+          <geom class="thigh_right_calf_motor"/>
+          <geom class="visual" mesh="thigh" pos="-0.103315 0.126341 -0.000494"/>
+
+  
+          <body name="RR_calf" pos="-0.218265 -0.016 -0.130605">
+            <inertial mass="0.404129" pos="0.127329 -0.000217 -0.173385"
+              fullinertia="0.002406 0.003112 0.0008166 -0.00001728254 0.001158 0.000025683551"/>
+            <joint class="knee" name="RR_calf_joint"/>
+            <geom class="calf_upper"/>
+            <geom class="calf_lower"/>
+            <geom class="visual" mesh="calf" pos="0.11495 0.142341 0.130111"/>
+  
+            <site name="RR" pos="0.156513 0 -0.243322" type="sphere" size="0.03125" group="5"/>
+            <geom class="foot"/> 
+
+          </body>
+        </body>
+      </body>
+
+    <!-- RL: rear left leg -->
+      <body name="RL_hip" pos="-0.18735 0.114 -0.030">
+        <inertial mass="1.014168" pos="-0.062617 0.017729 0.000038" 
+          fullinertia="0.001013 0.00149 0.001378 0.000022468219 -0.000000015793 0.000001111084"/>
+        <joint class="abduction_L" name="RL_hip_joint"/>
+        <geom class="hip_RL"/>
+        <geom class="visual" mesh="hip" pos="0.039365 -0.063241 -0.000494" quat="0 0 0 1"/>
+
+        <body name="RL_thigh" pos="-0.06395 0.0631 0">
+          <inertial mass="1.68684" pos="-0.056134 0.039711 -0.031318"
+            fullinertia="0.006366 0.01847 0.01506 -0.001867 -0.006504 -0.001039"/>
+          <joint class="hip" name="RL_thigh_joint"/>
+          <geom class="thigh_left_body_central"/>
+          <geom class="thigh_left_body_upper"/>
+          <geom class="thigh_left_calf_motor"/>
+          <geom class="visual" mesh="thigh_mirror" pos="-0.103315 -0.126341 -0.000494"/>
+
+          <body name="RL_calf" pos="-0.218265 0.016 -0.130605">
+            <inertial mass="0.404129" pos="0.127329 0.000232 -0.173385"
+              fullinertia="0.002392 0.003112 0.0008305 0.000018100848 0.001167 -0.000027376066"/>
+            <joint class="knee" name="RL_calf_joint"/>
+            <geom class="calf_upper"/>
+            <geom class="calf_lower"/>
+            <geom class="visual" mesh="calf_mirror" pos="0.11495 -0.142341 0.130111"/>
+
+            <site name="RL" pos="0.156513 0 -0.243322" type="sphere" size="0.03125" group="5"/>
+            <geom class="foot"/> 
+
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <!-- The 12 joints, each assigned to its motor class and named.
+  NOTE: each joint is named after the body it moves (a choice made when writing the code). -->
+  <!-- ACTUATORS: one <position> actuator per joint, i.e. impedance control (Kp/Kd).
+       MuJoCo integrates it implicity -> stable with high gains even at a 1 ms timestep.
+       ctrl = target angle (XML convention). Indices in data.ctrl: 0-11, in the order below. -->
+  <actuator>
+    <!-- Impedance (Kp/Kd) -->
+    <position class="abduction_R" name="FR_hip_pos" joint="FR_hip_joint"/>
+    <position class="hip" name="FR_thigh_pos" joint="FR_thigh_joint"/>
+    <position class="knee" name="FR_calf_pos" joint="FR_calf_joint"/>
+    <position class="abduction_L" name="FL_hip_pos" joint="FL_hip_joint"/>
+    <position class="hip" name="FL_thigh_pos" joint="FL_thigh_joint"/>
+    <position class="knee" name="FL_calf_pos" joint="FL_calf_joint"/>
+    <position class="abduction_R" name="RR_hip_pos" joint="RR_hip_joint"/>
+    <position class="hip" name="RR_thigh_pos" joint="RR_thigh_joint"/>
+    <position class="knee" name="RR_calf_pos" joint="RR_calf_joint"/>
+    <position class="abduction_L" name="RL_hip_pos" joint="RL_hip_joint"/>
+    <position class="hip" name="RL_thigh_pos" joint="RL_thigh_joint"/>
+    <position class="knee" name="RL_calf_pos" joint="RL_calf_joint"/>
+
+  </actuator>
+
+  <!-- <keyframe>
+    <key name="home" qpos="0 0 0.440293 1 0 0 0 0 0.721157 -1.28436 0 0.571272 -0.948805 0 0.571272 -0.948805 0 0.721157 -1.28436"
+      ctrl="0 0.9 -1.8 0 0.9 -1.8 0 0.9 -1.8 0 0.9 -1.8"/>
+    <key name="up" qpos="0 0 0.27 1 0 0 0 0 0.9 -1.08 0 0.9 -1.08 0 0.9 -1.08 0 0.9 -1.08"
+      ctrl="0 0.9 -1.08 0 0.9 -1.08 0 0.9 -1.08 0 0.9 -1.08"/>
+  </keyframe> -->
+
+  <!-- Exclude contacts between the trunk and the hip bodies to avoid unwanted collisions
+       that could affect the robot's stability.
+       Note: needed to avoid vibrations, because these geometries overlap deeply from frame zero.
+       The geoms' margin parameter is not enough to avoid them, so they are excluded entirely. -->
+  <contact>
+    <exclude body1="trunk" body2="FR_hip"/>
+    <exclude body1="trunk" body2="FL_hip"/>
+    <exclude body1="trunk" body2="RR_hip"/>
+    <exclude body1="trunk" body2="RL_hip"/>
+  </contact>
+
+</mujoco>

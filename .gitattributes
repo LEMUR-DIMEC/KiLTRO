@@ -1,0 +1,14 @@
+# Store text files with LF in the repository; Git converts them to the
+# local convention (CRLF on Windows) when checking out.
+* text=auto
+
+*.urdf  text
+*.xml   text
+*.obj   text
+*.py    text
+*.md    text
+*.txt   text
+
+*.png   binary
+*.jpg   binary
+*.stl   binary
