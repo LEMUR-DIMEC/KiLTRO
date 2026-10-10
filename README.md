@@ -73,7 +73,7 @@ We use reflected rotor inertia, 0.03 kg m2 per joint, as the `armature` attribut
 
 For testing the URDF on MuJoCo we use view_in_mujoco.py
 
-```
+``` bash
 python view_in_mujoco.py          # static pose, pinned base, joint sliders
 python view_in_mujoco.py --drop   # free base with gravity
 python view_in_mujoco.py --check  # masses, inertias and limits, no window
@@ -83,6 +83,18 @@ The default mode pins the base and turns gravity off so the sliders are usable.
 
 The MJCF model opens directly in the MuJoCo viewer:
 
-```
+``` bash
 python -m mujoco.viewer --mjcf="$PWD/mjcf/scene.xml"
+```
+
+## Citing Kiltro
+If you use this model in your work, please use the following citation:
+
+``` bibtex
+@software{kiltro2026github,
+  author = {Garrido, Lucas and Campodónico, Ulises},
+  title = {KiLTRO},
+  url = {https://github.com/LEMUR-DIMEC/KiLTRO},
+  year = {2026},
+}
 ```
