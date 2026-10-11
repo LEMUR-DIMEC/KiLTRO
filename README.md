@@ -47,10 +47,10 @@ Velocity limits are 150 rad/s at the motor divided by the gear ratio.
 
 ## Actuation
 
-Brushless motors, at 24 V.
+12x Eagle Motors LA8308, 90kV, running at 24V.
 
-Abduction and thigh run a two-stage 1:5.11 planetary, 1:26.11 overall. The knee adds a
-30/36 tooth belt on top, 1:31.33 overall.
+Abduction and thigh run a two-stage 5.11:1 planetary reduction, 26.11:1 overall. The knee adds a
+30/36 tooth belt on top, 31.33:1 overall.
 
 ## Collision geometry
 
